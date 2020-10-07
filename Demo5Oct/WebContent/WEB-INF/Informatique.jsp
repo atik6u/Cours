@@ -8,7 +8,7 @@
 </head>
 <body>
 	<%@include file="Menu.jsp" %>
-	<h1>Informatique JSP</h1>
+	<h1>Cours Informatique...</h1>
 	Bonjour
 	<%
 	String nom = (String)request.getAttribute("nom");
