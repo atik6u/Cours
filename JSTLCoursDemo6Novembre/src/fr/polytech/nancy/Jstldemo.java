@@ -1,6 +1,8 @@
 package fr.polytech.nancy;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,13 +40,18 @@ public class Jstldemo extends HttpServlet {
 		request.setAttribute("etudiant", etudiant);
 		
 		int a = Integer.parseInt(request.getParameter("a"));
-//		request.setAttribute("a", a);
+		request.setAttribute("a", a);
 		int b = Integer.parseInt(request.getParameter("b"));
-//		request.setAttribute("b", b);
+		request.setAttribute("b", b);
 		
 		int result = somme(a, b);
 		request.setAttribute("result", result);
 		
+		ArrayList<Etudiant> listeEtudiants = new ArrayList<Etudiant>();
+		listeEtudiants.add(new Etudiant(2, "atik2", "bbb"));
+		listeEtudiants.add(new Etudiant(3, "atik3", "ccc"));
+		listeEtudiants.add(new Etudiant(4, "atik4", "ddd"));
+		request.setAttribute("listeEtudiants", listeEtudiants);
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/JspJstl.jsp").forward(request, response);
 	}
