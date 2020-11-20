@@ -1,23 +1,27 @@
 package fr.polytech.nancy;
 
 public class Etudiant {
-	private int num;
+	private int id;
 	private String nom;
 	private String prenom;
 	
+	public Etudiant() {
+		super();
+	}
+
 	public Etudiant(int num, String nom, String prenom) {
 		super();
-		this.num = num;
+		this.id = num;
 		this.nom = nom;
 		this.prenom = prenom;
 	}
 
-	public int getNum() {
-		return num;
+	public int getId() {
+		return id;
 	}
 
-	public void setNum(int num) {
-		this.num = num;
+	public void setId(int num) {
+		this.id = num;
 	}
 
 	public String getNom() {
@@ -38,7 +42,7 @@ public class Etudiant {
 
 	@Override
 	public String toString() {
-		return "Etudiant [num=" + num + ", nom=" + nom + ", prenom=" + prenom + "]";
+		return "Etudiant [num=" + id + ", nom=" + nom + ", prenom=" + prenom + "]";
 	}
 
 	@Override
@@ -55,7 +59,7 @@ public class Etudiant {
 				return false;
 		} else if (!nom.equals(other.nom))
 			return false;
-		if (num != other.num)
+		if (id != other.id)
 			return false;
 		if (prenom == null) {
 			if (other.prenom != null)

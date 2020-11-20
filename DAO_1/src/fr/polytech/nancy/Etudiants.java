@@ -2,6 +2,7 @@ package fr.polytech.nancy;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,9 +11,17 @@ import java.util.List;
 
 // ici, on definit la couche metier de notre application
 public class Etudiants {
+	private Connection connection;
 	
-	public List<Etudiant> afficherTousLesEtudiants() {
-		List<Etudiant> resultat = new ArrayList<Etudiant>();
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
+	public void seConnecter() {
 		
 		// Chargement du driver de MySQL 
 		try {
@@ -20,14 +29,24 @@ public class Etudiants {
 		} catch (ClassNotFoundException e) {
 			System.out.println("Le driver n'est pas chargé");
 		}
-		
 		//se connecter à la base de données
-		Connection connection = null;
+		try {
+			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cm13novembre?useSSL=false", "root", "root");
+		} catch (Exception e) {
+			System.out.println("Erreur connexion à la base des donnees");
+		}
+	}
+	
+	public List<Etudiant> afficherTousLesEtudiants() {
+		List<Etudiant> resultat = new ArrayList<Etudiant>();
+		
+		this.seConnecter();
+		
 		Statement statement = null;
 		ResultSet resultSet = null;
 		
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cm13novembre?useSSL=false", "root", "root");
+			
 			statement = connection.createStatement();
 			// Executer une requete
 			resultSet = statement.executeQuery("SELECT * FROM `etudiants`;");
@@ -63,5 +82,38 @@ public class Etudiants {
 		}
 		
 		return resultat;
+	}
+	
+	public void ajouterEtudiant(Etudiant etudiant) {
+		// Connxion àla base des données
+		this.seConnecter();
+		//faille d'injection SQL
+		try {
+			PreparedStatement preparedStatement = this.connection.prepareStatement("INSERT INTO `etudiants`(`identifiant`, `nom`, `prenom`) VALUES (?,?,?);");
+			preparedStatement.setInt(1, etudiant.getId());
+			preparedStatement.setString(2, etudiant.getNom());
+			preparedStatement.setString(3, etudiant.getPrenom());
+			
+			//executer la requete
+			preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("Erreur ajouterEtudiant");
+		}
+		
+		
+		
+				
+//		Statement statement = null;
+//		ResultSet resultSet = null;
+//				
+//		try {
+//			statement = connection.createStatement();
+//			// Executer une requete
+//			resultSet = statement.executeQuery("INSERT INTO `etudiants`(`identifiant`, `nom`, `prenom`) VALUES ("+ identifiant +","+ nom +","+ prenom +");");
+//			
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+		
 	}
 }

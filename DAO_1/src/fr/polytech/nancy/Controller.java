@@ -37,7 +37,15 @@ public class Controller extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		Etudiant etudiant = new Etudiant();
+		
+		etudiant.setId(Integer.parseInt(request.getParameter("id")));
+		etudiant.setNom(request.getParameter("nom"));
+		etudiant.setPrenom(request.getParameter("prenom"));
+		
+		Etudiants etudiants = new Etudiants();
+		etudiants.ajouterEtudiant(etudiant);
+		
 		doGet(request, response);
 	}
 
