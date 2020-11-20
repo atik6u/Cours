@@ -99,21 +99,5 @@ public class Etudiants {
 		} catch (Exception e) {
 			System.out.println("Erreur ajouterEtudiant");
 		}
-		
-		
-		
-				
-//		Statement statement = null;
-//		ResultSet resultSet = null;
-//				
-//		try {
-//			statement = connection.createStatement();
-//			// Executer une requete
-//			resultSet = statement.executeQuery("INSERT INTO `etudiants`(`identifiant`, `nom`, `prenom`) VALUES ("+ identifiant +","+ nom +","+ prenom +");");
-//			
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-		
 	}
 }
